@@ -1,14 +1,36 @@
-.nav {
-    grid-area: n;
-    background-color: burlywood;
-    padding: 20px;
-}
-
-.item a {
-    color: white;
+a,
+a:visited,
+a:hover,
+a:active {
     text-decoration: none;
+    color: inherit;
 }
 
-.item a.activeLink {
+.nav {
+    margin: 0rem 0rem 0 0;
+    padding: 1rem;
+    grid-area: n;
+    display: grid;
+    align-items: start;
+    grid-template-rows: repeat(5, 50px);
+    background: linear-gradient(to right, #b844ff, #a642ff);
+    transition: 0.4s;
+    border-top: 2px solid #eb4cff;
+    border-left: 2px solid #eb4cff;
+}
+
+.item {
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.item:hover,
+a.active {
     color: gold;
+}
+
+.wrap_friend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }

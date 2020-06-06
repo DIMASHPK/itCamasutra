@@ -1,22 +1,26 @@
 .dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  grid-column-gap: 20px;
 }
 
-.dialogsItems {
-    padding: 10px;
-    color: white;
+.dialogs_items {
+  padding: 10px;
 }
 
-.dialogsItems .active {
-    color: gold;
+.dialogs_item {
+  font-size: 22px;
+  padding: 0.2rem 0.5rem;
+  margin: 0 auto 1rem;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: 0.3s;
 }
 
-.messages {
-    padding: 10px;
+.addMsg {
+  grid-row-start: 2;
+  grid-column-start: 2;
+  grid-row-end: 2;
+  grid-column-end: 2;
 }
-
-.messages .message {
-    color: white;
-}
-

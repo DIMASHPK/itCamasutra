@@ -1,34 +1,52 @@
 .app-wrapper {
-    margin: 0 auto;
-    display: grid;
-    width: 1200px;
-    grid-template-areas: "h h" "n c";
-
-    grid-template-rows: 60px 1fr;
-    grid-template-columns: 2fr 10fr;
-    /* grid-gap: 10px; */
+  display: grid;
+  grid-template-areas: "h h" "n c";
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 250px 10fr;
+  height: 100vh;
 }
 
 .app-wrapper-content {
-    grid-area: c;
-    background-color: cornflowerblue;
+  margin: 0 0 0 0;
+  padding: 1rem;
+  grid-area: c;
+  background: linear-gradient(to right, #a342ff, #4837ff);
+  transition: 0.4s;
+  border-top: 2px solid #eb4cff;
+  border-left: 2px solid #eb4cff;
 }
 
+h3 {
+  color: gold;
+  margin: 0;
+}
 
-
-
-
-
-
-
-
-
-/*
-
-/messages
-/dialogs
-
-/dialogs/3
-/dialogs/2
-
-*/
+textarea {
+  background: linear-gradient(to right, #a342ff, #663bff);
+  border: 1px solid #eb4cff;
+  color: white;
+  padding: 10px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+textarea::placeholder{
+  color: gold;
+}
+button {
+  background: #b844ff;
+  outline: none;
+  border: 1px solid #eb4cff;
+  transition: 0.2s;
+  color: #fff;
+  cursor: pointer;
+}
+button:hover {
+  border-radius: 20px;
+  background: #4837ff;
+}
+button:disabled{
+  background: none;
+  cursor: auto;
+  border-color: rgba(0,0,0,0)
+}

@@ -1,77 +1,38 @@
-import React, {useState} from 'react';
-import s from './ProfileInfo.module.css';
-import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-import userPhoto from "../../../assets/images/user.png";
-import ProfileDataForm from "./ProfileDataForm";
+import React from "react";
+import Preloader from "../../common/Preloader/Prelodaer";
+import s from "./ProfileInfo.module.css";
+import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
-const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
 
-    let [editMode, setEditMode] = useState(false);
-
-    if (!profile) {
-        return <Preloader/>
-    }
-
-    const onMainPhotoSelected = (e) => {
-        if (e.target.files.length) {
-            savePhoto(e.target.files[0]);
-        }
-    }
-
-    const onSubmit = (formData) => {
-        saveProfile(formData).then(
-            () => {
-                setEditMode(false);
-            }
-        );
-    }
-
-    return (
+const ProfileInfo = ({ srcPhoto, profile, avatar, isFetching, contacts, ...props }) => (
+  <>
+    {isFetching ? (
+      <Preloader />
+    ) : (
+      <div>
         <div>
-            <div className={s.descriptionBlock}>
-                <img src={profile.photos.large || userPhoto} className={s.mainPhoto}/>
-                {isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}
-
-                { editMode
-                    ? <ProfileDataForm initialValues={profile} profile={profile} onSubmit={onSubmit}/>
-                    : <ProfileData goToEditMode={() => {setEditMode(true)} } profile={profile} isOwner={isOwner}/> }
-
-                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+          <img src={srcPhoto} alt="wall" />
+        </div>
+        <div className={s.info}>
+          <img className={s.avatar} src={avatar} alt="avatar" />
+          <div className={s.dataOfUser}>
+            <h3>{profile.fullName}</h3>
+            <ProfileStatusWithHooks {...props}/>
+            <p>looking for a job: {`${profile.lookingForAJob}`}</p>
+            <p>About me: {`${!profile.aboutMe ? "non" : profile.aboutMe}`}</p>
+            <div className={"contacts"}>
+              {contacts &&
+                contacts.map((contact, i) => (
+                  <p key={i + 1}>
+                    {contact[0]}:{`${contact[1]}`}
+                  </p>
+                ))}
             </div>
+          </div>
         </div>
-    )
-}
-
-const ProfileData = ({profile, isOwner, goToEditMode}) => {
-    return <div>
-        {isOwner && <div><button onClick={goToEditMode}>edit</button></div>}
-        <div>
-            <b>Full name</b>: {profile.fullName}
-        </div>
-        <div>
-            <b>Looking for a job</b>: {profile.lookingForAJob ? "yes" : "no"}
-        </div>
-        {profile.lookingForAJob &&
-        <div>
-            <b>My professional skills</b>: {profile.lookingForAJobDescription}
-        </div>
-        }
-
-        <div>
-            <b>About me</b>: {profile.aboutMe}
-        </div>
-        <div>
-            <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
-            return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
-        })}
-        </div>
-    </div>
-}
-
-
-const Contact = ({contactTitle, contactValue}) => {
-    return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
-}
+      </div>
+    )}
+  </>
+);
 
 export default ProfileInfo;

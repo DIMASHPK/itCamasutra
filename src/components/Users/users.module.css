@@ -1,6 +1,44 @@
-.userPhoto {
-     width: 100px;
-    height: 100px;
+.user {
+  display: flex;
+  padding: 20px;
+}
+
+.leftSide {
+  margin-right: 20px;
+}
+
+.user img {
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50px;
+  margin-bottom: 20px;
+}
+
+.user button {
+  padding: 5px 15px;
+  display: block;
+  margin: auto;
+}
+
+.rightSide {
+  display: flex;
+  justify-content: space-between;
+  min-width: 50%;
+  border-radius: 20px;
+  border: 1px solid #eb4cff;
+  padding: 5px 15px;
+}
+
+
+
+.rightSide p {
+  margin: 0;
+}
+
+.rightInner {
+  align-self: flex-end;
+  padding: 0 5px 5px 0;
 }
 
 

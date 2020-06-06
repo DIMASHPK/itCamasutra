@@ -1,69 +1,57 @@
-import React, {Component} from 'react';
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import {HashRouter, Route, withRouter} from "react-router-dom";
-
-import UsersContainer from "./components/Users/UsersContainer";
+import React, {Component, Suspense} from "react";
+import {Route} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginPage from "./components/Login/Login";
-import {connect, Provider} from "react-redux";
-import {compose} from "redux";
-import {initializeApp} from "./redux/app-reducer";
-import Preloader from "./components/common/Preloader/Preloader";
-import store from "./redux/redux-store";
-import {withSuspense} from "./hoc/withSuspense";
+import NavbarContainer from "./components/Navbar/NavbarContainer";
+import Login from "./components/Login/LoginContainer";
+import {connect} from "react-redux";
+import {initializedThunkCreater} from "./redux/appReducer";
+import Preloader from "./components/common/Preloader/Prelodaer";
+import "./App.css";
+/*import UsersContainer from "./components/Users/UsersContainer"; suspense(<UsersContainer/>)*/
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
+const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileConteiner"));
+const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 
 
 
 class App extends Component {
     componentDidMount() {
-        this.props.initializeApp();
+        const {initializedThunkCreater} = this.props;
+        initializedThunkCreater()
     }
 
     render() {
-        if (!this.props.initialized) {
-            return <Preloader />
-        }
+        const {initialized} = this.props
+        const suspense = (component) =>
+            <Suspense fallback={<Preloader/>}>
+                {component}
+            </Suspense>
+
 
         return (
-                    <div className='app-wrapper'>
-                        <HeaderContainer/>
-                        <Navbar/>
-                        <div className='app-wrapper-content'>
-                            <Route path='/dialogs'
-                                   render={withSuspense(DialogsContainer)}/>
-
-                            <Route path='/profile/:userId?'
-                                   render={withSuspense(ProfileContainer)} />
-
-                            <Route path='/users'
-                                   render={() => <UsersContainer/>}/>
-
-                            <Route path='/login'
-                                   render={() => <LoginPage/>}/>
-                        </div>
-                    </div>
-        )
+            <div className="app-wrapper">
+                <HeaderContainer/>
+                <NavbarContainer/>
+                <div className={"app-wrapper-content"}>
+                    {initialized ? (
+                        <>
+                            <Route path="/" render={() => <Login/>}/>
+                            <Route path="/dialogs/" render={() => suspense(<DialogsContainer/>)}/>
+                            <Route path="/profile/:userId?" render={() => suspense(<ProfileContainer/>)}/>
+                            <Route path="/users/" render={() => suspense(<UsersContainer/>)}/>
+                        </>
+                    ) : (
+                        <Preloader/>
+                    )}
+                </div>
+            </div>
+        );
     }
 }
 
-const mapStateToProps = (state) => ({
-    initialized: state.app.initialized
-})
 
-let AppContainer = compose(
-    withRouter,
-    connect(mapStateToProps, {initializeApp}))(App);
+const mapStateToProps = ({appReducer: {initialized}}) => ({initialized})
+const mapDispatchToProps = {initializedThunkCreater};
 
-const SamuraiJSApp = (props) => {
-   return <HashRouter >
-        <Provider store={store}>
-            <AppContainer />
-        </Provider>
-    </HashRouter>
-}
-
-export default SamuraiJSApp;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

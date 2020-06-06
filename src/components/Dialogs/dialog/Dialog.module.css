@@ -1,0 +1,20 @@
+.dialogs_item {
+  font-size: 22px;
+  padding: 0.2rem 0.5rem;
+  margin: 0 auto 1rem;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: 0.3s;
+}
+
+.dialogs_item:hover,
+.dialogs_item.active {
+  border: 1px solid gold;
+  border-radius: 20px;
+  color: gold;
+}
+
+a.active {
+  color: gold;
+}

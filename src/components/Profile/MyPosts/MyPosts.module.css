@@ -1,7 +1,9 @@
-.postsBlock {
-    padding: 10px;
+.addPost {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2rem;
 }
-
-.posts {
-    margin-top: 10px;
+.addPost button {
+  margin-top: 1.5rem;
 }

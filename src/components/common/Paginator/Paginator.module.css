@@ -1,13 +1,68 @@
-
-.paginator {
-    margin: 10px;
-}
-.pageNumber {
-    padding: 2px;
-    border: 1px solid grey;
+.pages {
+    width: 147px;
+    margin: auto;
+    display: flex;
 }
 
-.pageNumber.selectedPage {
-    font-weight: bold;
-    border-color: black;
+.pages span {
+    padding: 0 10px;
+    font-size: 20px;
+    color: gold;
+}
+
+.pages button {
+    padding: 5px 15px;
+    position: relative;
+    z-index: 99;
+    background: #eb4cff;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #fff
+}
+
+.pages button:hover {
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0);
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.pages button:after {
+    content: "";
+    border: 22px solid transparent;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-109%);
+    left: 90%;
+    opacity: 0;
+    transition: 0.3s;
+    z-index: -1;
+}
+
+.pages button.prev:after {
+    border-right: 40px solid #eb4cff;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.pages button.next:after {
+    border-left: 40px solid #eb4cff;
+}
+
+.pages button:hover:after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-59%);
+}
+
+.pages button.prev:hover:after {
+    transform: translateY(-50%) translateX(-110%);
+}
+
+button.disabled:after {
+    display: none;
+}
+
+button.disabled {
+    background: rgba(0, 0, 0, 0);
+    color: rgba(0,0,0,0.16);
+    cursor: auto;
 }

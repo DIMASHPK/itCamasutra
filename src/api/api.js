@@ -1,74 +1,42 @@
 import * as axios from "axios";
 
-const instance = axios.create({
+const instance  = axios.create({
     withCredentials: true,
-    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-    headers:     {
-        "API-KEY": "b1775b2f-c3a5-4509-8dc9-90b5629de7c3"
+    baseURL: "https://social-network.samuraijs.com/api/1.0/",
+    headers: {
+        "API-KEY": "089b9c13-41ca-4c7b-b82b-fa6bc7d12363"
     }
-});
+})
 
+export const api = {
+    authMe: () => {
+        return instance.get("auth/me").then(res => res.data)
+    },
+    login: (email, password, rememberMe = false) => {
+        return instance.post('auth/login', {email, password, rememberMe})
+    },
+    logout: () => {
+        return instance.delete('auth/login')
+    },
+    followUser: (id, type) => {
+        return instance[type](`follow/${id}`).then(res => res.data);
+    },
+     pageChange: (counter, pageSize) => {
+        return  instance
+            .get(`users?page=${counter}&count=${pageSize}`).then(res => res.data);
+    },
+    getUsers: () => {
+        return instance
+            .get("users?page=1&count=10").then(res => res.data)
+    },
+    getUser: (userId) => {
+        return instance.get(`profile/${userId}`)
+    },
+    getStatus: (userId) => {
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus: (status) => {
+        return instance.put(`profile/status`, {status}).then(res => res.data)
+    },
 
-export const usersAPI = {
-    getUsers(currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => {
-                return response.data;
-            });
-    },
-    follow(userId) {
-        return instance.post(`follow/${userId}`)
-    },
-    unfollow(userId) {
-        return instance.delete(`follow/${userId}`)
-    },
-    getProfile(userId) {
-        console.warn('Obsolete method. Please profileAPI object.')
-        return profileAPI.getProfile(userId);
-    }
 }
-
-export const profileAPI = {
-    getProfile(userId) {
-        return instance.get(`profile/` + userId);
-    },
-    getStatus(userId) {
-        return instance.get(`profile/status/` + userId);
-    },
-    updateStatus(status) {
-        return instance.put(`profile/status`, { status: status });
-    },
-    savePhoto(photoFile) {
-        const formData = new FormData();
-        formData.append("image", photoFile);
-
-        return instance.put(`profile/photo`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-    },
-    saveProfile(profile) {
-        return instance.put(`profile`, profile );
-    }
-}
-
-export const authAPI = {
-    me() {
-        return instance.get(`auth/me`);
-    },
-    login(email, password, rememberMe = false, captcha = null) {
-        return instance.post(`auth/login`, { email, password, rememberMe, captcha });
-    },
-    logout() {
-        return instance.delete(`auth/login`);
-    }
-}
-
-export const securityAPI = {
-    getCaptchaUrl() {
-        return instance.get(`security/get-captcha-url`);
-    }
-}
-
-

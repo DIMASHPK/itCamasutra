@@ -1,16 +1,18 @@
-import React from 'react';
-import s from './Post.module.css';
+import React from "react";
+import Preloader from "../../../common/Preloader/Prelodaer";
+import s from "./Post.module.css";
 
-const Post = (props) => {
-  return (
-    <div className={s.item}>
-      <img src='https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg' />
-        { props.message }
-          <div>
-        <span>like</span> { props.likesCount }
-      </div>
+const Post = ({ avatar, message, likesCount, isFetching, name }) => (
+  <div className={s.item}>
+    <div className={s.avatarWrap}>
+      {isFetching ? <Preloader /> : <img src={avatar} alt="avatr" />}
     </div>
-  )
-}
+    <div>
+      <h4>{name}</h4>
+      <span className={s.message}>{message}</span>
+      <p className={s.like}>like {likesCount}</p>
+    </div>
+  </div>
+);
 
 export default Post;

@@ -1,62 +1,97 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React from "react";
+import Users from "./Users";
+import Preloader from "../common/Preloader/Prelodaer";
+import {connect} from "react-redux";
 import {
-    follow,
-    setCurrentPage,
-    unfollow, toggleFollowingProgress, requestUsers
-} from '../../redux/users-reducer';
-import Users from './Users';
-import Preloader from "../common/Preloader/Preloader";
+    toggleFollowingProgress,
+    getUsersThunkCreater,
+    pageChangeThunkCreater,
+    followThunkCreater
+} from "../../redux/usersReducer";
 import {compose} from "redux";
-import {
-    getCurrentPage,
-    getFollowingInProgress,
-    getIsFetching,
-    getPageSize,
-    getTotalUsersCount, getUsers
-} from "../../redux/users-selectors";
-
+import {withAuthRedirectHOC} from "../hoc/AuthRedirect";
 
 class UsersContainer extends React.Component {
+    state = {
+        counter: 1
+    };
+
     componentDidMount() {
-        const {currentPage, pageSize} = this.props;
-        this.props.getUsers(currentPage, pageSize);
+        const {getUsersThunkCreater} = this.props
+        getUsersThunkCreater()
     }
 
-    onPageChanged = (pageNumber) => {
-        const {pageSize} = this.props;
-        this.props.getUsers(pageNumber, pageSize);
+    onPageChanged = () => {
+        const {pageSize, pageChangeThunkCreater} = this.props;
+        const {counter} = this.state;
+
+        pageChangeThunkCreater(counter, pageSize)
+    };
+
+    setPage = ({target: {innerHTML}}) => {
+        if (innerHTML === "prev") {
+            this.setState({counter: this.state.counter - 1});
+        } else {
+            this.setState({counter: this.state.counter + 1});
+        }
+    };
+
+    componentDidUpdate(props, state) {
+        state !== this.state && this.onPageChanged();
+    }
+
+    followUser = (id) => {
+        const {followThunkCreater} = this.props
+
+        followThunkCreater(id, 'post', true)
+    }
+
+    unfollowUser = (id) => {
+        const {followThunkCreater} = this.props
+
+        followThunkCreater(id, 'delete', false)
     }
 
     render() {
+        const {
+            pageSize,
+            totalUsersCount,
+            isFetching
+        } = this.props;
+        let pagesCount = Math.ceil(totalUsersCount / pageSize);
 
-        return <>
-            {this.props.isFetching ? <Preloader/> : null}
-            <Users totalUsersCount={this.props.totalUsersCount}
-                   pageSize={this.props.pageSize}
-                   currentPage={this.props.currentPage}
-                   onPageChanged={this.onPageChanged}
-                   users={this.props.users}
-                   follow={this.props.follow}
-                   unfollow={this.props.unfollow}
-                   followingInProgress={this.props.followingInProgress}
-            />
-        </>
+
+        return (
+            <>
+                {isFetching ? (
+                    <Preloader/>
+                ) : (
+                    <Users
+                        {...this.props}
+                        followUser={this.followUser}
+                        unfollowUser={this.unfollowUser}
+                        counter={this.state.counter}
+                        setPage={this.setPage}
+                        pagesCount={pagesCount}
+
+                    />
+                )}
+            </>
+        );
     }
 }
 
-let mapStateToProps = (state) => {
-    return {
-        users: getUsers(state),
-        pageSize: getPageSize(state),
-        totalUsersCount: getTotalUsersCount(state),
-        currentPage: getCurrentPage(state),
-        isFetching: getIsFetching(state),
-        followingInProgress: getFollowingInProgress(state)
-    }
-}
+const mapStateToProps = ({
+                             userReducer: {users, pageSize, totalUsersCount, currentPage, isFetching, followingInProgress}
+                         }) => ({users, pageSize, totalUsersCount, currentPage, isFetching, followingInProgress});
+
+const mapDispatchToProps = {
+    toggleFollowingProgress,
+    getUsersThunkCreater,
+    pageChangeThunkCreater,
+    followThunkCreater
+};
+
+export default compose(connect(mapStateToProps, mapDispatchToProps), withAuthRedirectHOC)(UsersContainer)
 
 
-export default compose(
-    connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsers: requestUsers})
-)(UsersContainer)
