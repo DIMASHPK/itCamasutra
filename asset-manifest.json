@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/itCamasutra/static/css/main.3f09c7fc.chunk.css",
+    "main.js": "/itCamasutra/static/js/main.a408690c.chunk.js",
+    "main.js.map": "/itCamasutra/static/js/main.a408690c.chunk.js.map",
+    "runtime~main.js": "/itCamasutra/static/js/runtime~main.1d14d76f.js",
+    "runtime~main.js.map": "/itCamasutra/static/js/runtime~main.1d14d76f.js.map",
+    "static/js/2.f679427b.chunk.js": "/itCamasutra/static/js/2.f679427b.chunk.js",
+    "static/js/2.f679427b.chunk.js.map": "/itCamasutra/static/js/2.f679427b.chunk.js.map",
+    "static/css/3.bf6e0f5a.chunk.css": "/itCamasutra/static/css/3.bf6e0f5a.chunk.css",
+    "static/js/3.532e2a12.chunk.js": "/itCamasutra/static/js/3.532e2a12.chunk.js",
+    "static/js/3.532e2a12.chunk.js.map": "/itCamasutra/static/js/3.532e2a12.chunk.js.map",
+    "static/css/4.ec0c55f7.chunk.css": "/itCamasutra/static/css/4.ec0c55f7.chunk.css",
+    "static/js/4.9a3001a5.chunk.js": "/itCamasutra/static/js/4.9a3001a5.chunk.js",
+    "static/js/4.9a3001a5.chunk.js.map": "/itCamasutra/static/js/4.9a3001a5.chunk.js.map",
+    "static/css/5.0fc1a1b8.chunk.css": "/itCamasutra/static/css/5.0fc1a1b8.chunk.css",
+    "static/js/5.df432cc0.chunk.js": "/itCamasutra/static/js/5.df432cc0.chunk.js",
+    "static/js/5.df432cc0.chunk.js.map": "/itCamasutra/static/js/5.df432cc0.chunk.js.map",
+    "index.html": "/itCamasutra/index.html",
+    "precache-manifest.4007651a05497d8577a71fec095c2552.js": "/itCamasutra/precache-manifest.4007651a05497d8577a71fec095c2552.js",
+    "service-worker.js": "/itCamasutra/service-worker.js",
+    "static/css/3.bf6e0f5a.chunk.css.map": "/itCamasutra/static/css/3.bf6e0f5a.chunk.css.map",
+    "static/css/4.ec0c55f7.chunk.css.map": "/itCamasutra/static/css/4.ec0c55f7.chunk.css.map",
+    "static/css/5.0fc1a1b8.chunk.css.map": "/itCamasutra/static/css/5.0fc1a1b8.chunk.css.map",
+    "static/css/main.3f09c7fc.chunk.css.map": "/itCamasutra/static/css/main.3f09c7fc.chunk.css.map",
+    "static/media/user.png": "/itCamasutra/static/media/user.d9870e6d.png"
+  }
+}
