@@ -2,7 +2,7 @@
   "name": "react-way-of-samurai",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/DIMASHPK/itCamasutra.git",
+  "homepage": "git@github.com:DIMASHPK/itCamasutra.git",
   "dependencies": {
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
